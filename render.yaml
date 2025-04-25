@@ -7,6 +7,7 @@ services:
       python manage.py collectstatic --noinput
     startCommand: |
       cd app
+      export PYTHONPATH=$PYTHONPATH:$(pwd)
       gunicorn app.wsgi:application
     envVars:
       - key: SECRET_KEY
@@ -17,3 +18,5 @@ services:
         value: .onrender.com
       - key: DJANGO_SETTINGS_MODULE
         value: app.settings
+      - key: PYTHONPATH
+        value: /opt/render/project/src/app
