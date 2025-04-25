@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: health-tracker
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: app.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
