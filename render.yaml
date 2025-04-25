@@ -2,8 +2,12 @@ services:
   - type: web
     name: health-tracker
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app.app.wsgi:application
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: |
+      cd app
+      gunicorn app.wsgi:application
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -11,3 +15,5 @@ services:
         value: False
       - key: ALLOWED_HOSTS
         value: .onrender.com
+      - key: DJANGO_SETTINGS_MODULE
+        value: app.settings
