@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-9v9fod5k_8fq7z&s8b15cchc59x+uhawsta@8savf3^kbg3$3-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',') or ['*']
+ALLOWED_HOSTS = [
+    'healthtracker-is4l.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    '216.24.60.0/24',
+    '*',
+]
 
 
 # Application definition
