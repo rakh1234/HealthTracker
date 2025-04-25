@@ -1,9 +1,9 @@
 services:
   - type: web
     name: health-tracker
-    env: docker
-    buildCommand: docker build -t health-tracker .
-    startCommand: gunicorn --bind 0.0.0.0:$PORT app.wsgi:application
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.app.wsgi:application
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -11,5 +11,3 @@ services:
         value: False
       - key: ALLOWED_HOSTS
         value: .onrender.com
-      - key: PYTHONPATH
-        value: /app
