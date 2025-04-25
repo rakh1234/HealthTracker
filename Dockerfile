@@ -3,11 +3,10 @@ LABEL maintainer="Healthtracker.com"
 
 ENV PYTHONUNBUFFERED 1  
 
-COPY ./requirements.txt /tmp/requirements.txt  
-COPY ./requirements.dev.txt /tmp/requirements.dev.txt
-COPY ./app /app  
-WORKDIR /app  
-EXPOSE 8000  
+WORKDIR /app
+COPY ./requirements.txt /app/requirements.txt  
+COPY ./requirements.dev.txt /app/requirements.dev.txt
+COPY . /app/
 
 ARG DEV=false
 RUN python -m venv /py && \
@@ -15,15 +14,17 @@ RUN python -m venv /py && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev && \
-    /py/bin/pip install -r /tmp/requirements.txt && \
+    /py/bin/pip install -r /app/requirements.txt && \
     if [ $DEV = "true" ]; \
-        then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+        then /py/bin/pip install -r /app/requirements.dev.txt ; \
     fi && \
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
-    adduser --disabled-password --no-create-home django-user  
-
+    adduser --disabled-password --no-create-home django-user
 
 ENV PATH="/py/bin:$PATH"  
 
-USER django-user  
+RUN chown -R django-user:django-user /app
+USER django-user
+
+EXPOSE 8000  
