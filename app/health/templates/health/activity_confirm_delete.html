@@ -1,0 +1,39 @@
+{% extends 'health/base.html' %}
+
+{% block title %}Delete Activity{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0 text-danger"><i class="fas fa-trash"></i> Delete Activity</h3>
+            </div>
+            <div class="card-body">
+                <p>Are you sure you want to delete this activity?</p>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>{{ activity.activity_type|title }}</h5>
+                        <p class="mb-1">Date: {{ activity.date }}</p>
+                        <p class="mb-1">Duration: {{ activity.duration }} minutes</p>
+                        {% if activity.distance %}
+                            <p class="mb-1">Distance: {{ activity.distance }} km</p>
+                        {% endif %}
+                        {% if activity.calories_burned %}
+                            <p class="mb-1">Calories: {{ activity.calories_burned }}</p>
+                        {% endif %}
+                        {% if activity.notes %}
+                            <p class="mb-0">Notes: {{ activity.notes }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    <a href="{% url 'activity_list' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

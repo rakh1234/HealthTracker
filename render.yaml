@@ -6,14 +6,14 @@ services:
       apt-get update && apt-get install -y postgresql-client libpq-dev
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
-    startCommand: gunicorn --bind 0.0.0.0:$PORT app.wsgi:application
+    startCommand: gunicorn --bind 0.0.0.0:$PORT wsgi:application
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: False
       - key: DJANGO_SETTINGS_MODULE
-        value: app.settings
+        value: settings
       - key: DB_HOST
         value: dpg-cnqtqfgl5elc73d2aqe0-a
       - key: DB_NAME

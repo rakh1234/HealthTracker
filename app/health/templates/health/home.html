@@ -1,0 +1,40 @@
+{% extends 'health/base.html' %}
+
+{% block title %}Welcome to Health Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="text-center mb-5">
+            <h1 class="display-4 text-success"><i class="fas fa-heartbeat"></i> Health Tracker</h1>
+            <p class="lead">Take control of your health with our comprehensive tracking platform</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card metric-card">
+                    <i class="fas fa-running fa-3x text-success mb-3"></i>
+                    <h3>Activity Tracking</h3>
+                    <p>Log your workouts, track your progress, and stay motivated with detailed activity metrics.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card metric-card">
+                    <i class="fas fa-utensils fa-3x text-success mb-3"></i>
+                    <h3>Nutrition Logging</h3>
+                    <p>Monitor your daily food intake, track macronutrients, and maintain a balanced diet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-3">Get Started</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">Login</a>
+            {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
