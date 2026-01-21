@@ -17,17 +17,45 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('goals/', views.goal_settings, name='goal_settings'),
     path('activities/', views.activity_list, name='activity_list'),
-    path('activities/create/', views.activity_create, name='activity_create'),
-    path('activities/<int:pk>/update/', views.activity_update, name='activity_update'),
-    path('activities/<int:pk>/delete/', views.activity_delete, name='activity_delete'),
+    path(
+        'activities/create/',
+        views.activity_create,
+        name='activity_create'
+    ),
+    path(
+        'activities/<int:pk>/update/',
+        views.activity_update,
+        name='activity_update'
+    ),
+    path(
+        'activities/<int:pk>/delete/',
+        views.activity_delete,
+        name='activity_delete'
+    ),
     path('nutrition/', views.nutrition_list, name='nutrition_list'),
-    path('nutrition/create/', views.nutrition_create, name='nutrition_create'),
-    path('nutrition/<int:pk>/update/', views.nutrition_update, name='nutrition_update'),
-    path('nutrition/<int:pk>/delete/', views.nutrition_delete, name='nutrition_delete'),
+    path(
+        'nutrition/create/',
+        views.nutrition_create,
+        name='nutrition_create'
+    ),
+    path(
+        'nutrition/<int:pk>/update/',
+        views.nutrition_update,
+        name='nutrition_update'
+    ),
+    path(
+        'nutrition/<int:pk>/delete/',
+        views.nutrition_delete,
+        name='nutrition_delete'
+    ),
 
     # REST API endpoints
     path('api/', include(router.urls)),
-    path('api/dashboard/', api_views.dashboard_stats, name='api_dashboard_stats'),
+    path(
+        'api/dashboard/',
+        api_views.dashboard_stats,
+        name='api_dashboard_stats'
+    ),
 
     # SPA catch-all route (must be last)
     path('', views.SPATemplateView.as_view(), name='spa'),

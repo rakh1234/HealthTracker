@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Sum, Avg, Count
+from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
 from django.views.generic import TemplateView
@@ -11,10 +11,12 @@ from django.template import TemplateDoesNotExist
 from .models import Activity, NutritionEntry, UserGoal
 from .forms import ActivityForm, NutritionEntryForm, UserGoalForm
 
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     return render(request, 'health/home.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -27,6 +29,7 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'health/register.html', {'form': form})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -47,10 +50,12 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'health/login.html', {'form': form})
 
+
 def user_logout(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
     return redirect('home')
+
 
 @login_required
 def dashboard(request):
@@ -71,15 +76,31 @@ def dashboard(request):
     ).order_by('-date')[:10]
 
     # Calculate today's totals
-    today_activities = Activity.objects.filter(user=request.user, date=today)
-    today_calories_burned = today_activities.aggregate(Sum('calories_burned'))['calories_burned__sum'] or 0
-    today_duration = today_activities.aggregate(Sum('duration'))['duration__sum'] or 0
+    today_activities = Activity.objects.filter(
+        user=request.user, date=today
+    )
+    today_calories_burned = today_activities.aggregate(
+        Sum('calories_burned')
+    )['calories_burned__sum'] or 0
+    today_duration = today_activities.aggregate(
+        Sum('duration')
+    )['duration__sum'] or 0
 
-    today_nutrition = NutritionEntry.objects.filter(user=request.user, date=today)
-    today_calories_consumed = today_nutrition.aggregate(Sum('calories'))['calories__sum'] or 0
-    today_protein = today_nutrition.aggregate(Sum('protein'))['protein__sum'] or 0
-    today_carbs = today_nutrition.aggregate(Sum('carbs'))['carbs__sum'] or 0
-    today_fat = today_nutrition.aggregate(Sum('fat'))['fat__sum'] or 0
+    today_nutrition = NutritionEntry.objects.filter(
+        user=request.user, date=today
+    )
+    today_calories_consumed = today_nutrition.aggregate(
+        Sum('calories')
+    )['calories__sum'] or 0
+    today_protein = today_nutrition.aggregate(
+        Sum('protein')
+    )['protein__sum'] or 0
+    today_carbs = today_nutrition.aggregate(
+        Sum('carbs')
+    )['carbs__sum'] or 0
+    today_fat = today_nutrition.aggregate(
+        Sum('fat')
+    )['fat__sum'] or 0
 
     # Get user goal
     try:
