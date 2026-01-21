@@ -8,7 +8,6 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Activity, NutritionEntry, UserGoal
 from .forms import ActivityForm, NutritionEntryForm, UserGoalForm
-from .analytics import get_user_data, calculate_trends, generate_activity_chart, generate_nutrition_chart, generate_goal_progress_chart, generate_recommendations
 
 def home(request):
     if request.user.is_authenticated:
@@ -80,18 +79,11 @@ def dashboard(request):
     today_carbs = today_nutrition.aggregate(Sum('carbs'))['carbs__sum'] or 0
     today_fat = today_nutrition.aggregate(Sum('fat'))['fat__sum'] or 0
 
-    # Analytics data
-    activities_data, nutrition_data = get_user_data(request.user, 30)
-    trends = calculate_trends(activities_data, nutrition_data, 30)
-
     # Get user goal
     try:
         user_goal = UserGoal.objects.get(user=request.user)
     except UserGoal.DoesNotExist:
         user_goal = None
-
-    # Generate recommendations
-    recommendations = generate_recommendations(request.user, trends, user_goal)
 
     context = {
         'recent_activities': recent_activities,
@@ -102,84 +94,9 @@ def dashboard(request):
         'today_protein': today_protein,
         'today_carbs': today_carbs,
         'today_fat': today_fat,
-        'trends': trends,
         'user_goal': user_goal,
-        'recommendations': recommendations[:3],  # Show top 3 recommendations
     }
     return render(request, 'health/dashboard.html', context)
-
-@login_required
-def analytics_dashboard(request):
-    """Advanced analytics dashboard with ML insights"""
-    # Get 90 days of data for better analysis
-    activities_data, nutrition_data = get_user_data(request.user, 90)
-    trends = calculate_trends(activities_data, nutrition_data, 90)
-
-    # Generate charts
-    activity_chart = generate_activity_chart(activities_data, 90)
-    nutrition_chart = generate_nutrition_chart(nutrition_data, 90)
-
-    # Get user goal
-    try:
-        user_goal = UserGoal.objects.get(user=request.user)
-        goal_progress_chart = generate_goal_progress_chart(request.user, 30)
-    except UserGoal.DoesNotExist:
-        user_goal = None
-        goal_progress_chart = None
-
-    # Generate comprehensive recommendations
-    recommendations = generate_recommendations(request.user, trends, user_goal)
-
-    # Additional analytics
-    weekly_stats = get_weekly_stats(request.user, 12)  # Last 12 weeks
-
-    context = {
-        'trends': trends,
-        'activity_chart': activity_chart,
-        'nutrition_chart': nutrition_chart,
-        'goal_progress_chart': goal_progress_chart,
-        'user_goal': user_goal,
-        'recommendations': recommendations,
-        'weekly_stats': weekly_stats,
-    }
-    return render(request, 'health/analytics_dashboard.html', context)
-
-def get_weekly_stats(user, weeks=12):
-    """Get weekly statistics for trend analysis"""
-    stats = []
-    today = timezone.now().date()
-
-    for i in range(weeks):
-        week_start = today - timedelta(days=(i * 7) + today.weekday())
-        week_end = week_start + timedelta(days=6)
-
-        week_activities = Activity.objects.filter(
-            user=user,
-            date__gte=week_start,
-            date__lte=week_end
-        )
-        week_nutrition = NutritionEntry.objects.filter(
-            user=user,
-            date__gte=week_start,
-            date__lte=week_end
-        )
-
-        calories_burned = week_activities.aggregate(Sum('calories_burned'))['calories_burned__sum'] or 0
-        calories_consumed = week_nutrition.aggregate(Sum('calories'))['calories__sum'] or 0
-        protein_intake = week_nutrition.aggregate(Sum('protein'))['protein__sum'] or 0
-        activity_days = week_activities.values('date').distinct().count()
-
-        stats.append({
-            'week': f'Week {weeks - i}',
-            'calories_burned': calories_burned,
-            'calories_consumed': calories_consumed,
-            'protein_intake': round(protein_intake, 1),
-            'activity_days': activity_days,
-            'week_start': week_start,
-            'week_end': week_end,
-        })
-
-    return stats[::-1]  # Reverse to show chronological order
 
 @login_required
 def goal_settings(request):
