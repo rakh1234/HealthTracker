@@ -119,7 +119,7 @@ def goal_settings(request):
             goal.user = request.user
             goal.save()
             messages.success(request, 'Your goals have been updated successfully!')
-            return redirect('analytics_dashboard')
+            return redirect('dashboard')
     else:
         if goal:
             form = UserGoalForm(instance=goal)
