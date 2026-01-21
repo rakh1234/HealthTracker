@@ -121,6 +121,7 @@ def dashboard(request):
     }
     return render(request, 'health/dashboard.html', context)
 
+
 @login_required
 def goal_settings(request):
     """Manage user goals"""
@@ -147,12 +148,24 @@ def goal_settings(request):
         else:
             form = UserGoalForm()
 
-    return render(request, 'health/goal_settings.html', {'form': form, 'goal': goal})
+    return render(
+        request,
+        'health/goal_settings.html',
+        {'form': form, 'goal': goal}
+    )
+
 
 @login_required
 def activity_list(request):
-    activities = Activity.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'health/activity_list.html', {'activities': activities})
+    activities = Activity.objects.filter(
+        user=request.user
+    ).order_by('-date')
+    return render(
+        request,
+        'health/activity_list.html',
+        {'activities': activities}
+    )
+
 
 @login_required
 def activity_create(request):
@@ -166,7 +179,12 @@ def activity_create(request):
             return redirect('activity_list')
     else:
         form = ActivityForm()
-    return render(request, 'health/activity_form.html', {'form': form, 'title': 'Log Activity'})
+    return render(
+        request,
+        'health/activity_form.html',
+        {'form': form, 'title': 'Log Activity'}
+    )
+
 
 @login_required
 def activity_update(request, pk):
@@ -179,7 +197,12 @@ def activity_update(request, pk):
             return redirect('activity_list')
     else:
         form = ActivityForm(instance=activity)
-    return render(request, 'health/activity_form.html', {'form': form, 'title': 'Update Activity'})
+    return render(
+        request,
+        'health/activity_form.html',
+        {'form': form, 'title': 'Update Activity'}
+    )
+
 
 @login_required
 def activity_delete(request, pk):
@@ -188,12 +211,23 @@ def activity_delete(request, pk):
         activity.delete()
         messages.success(request, 'Activity deleted successfully!')
         return redirect('activity_list')
-    return render(request, 'health/activity_confirm_delete.html', {'activity': activity})
+    return render(
+        request,
+        'health/activity_confirm_delete.html',
+        {'activity': activity}
+    )
+
 
 @login_required
 def nutrition_list(request):
-    nutrition_entries = NutritionEntry.objects.filter(user=request.user).order_by('-date')
-    return render(request, 'health/nutrition_list.html', {'nutrition_entries': nutrition_entries})
+    nutrition_entries = NutritionEntry.objects.filter(
+        user=request.user
+    ).order_by('-date')
+    return render(
+        request,
+        'health/nutrition_list.html',
+        {'nutrition_entries': nutrition_entries}
+    )
 
 @login_required
 def nutrition_create(request):
@@ -207,7 +241,11 @@ def nutrition_create(request):
             return redirect('nutrition_list')
     else:
         form = NutritionEntryForm()
-    return render(request, 'health/nutrition_form.html', {'form': form, 'title': 'Log Nutrition'})
+    return render(
+        request,
+        'health/nutrition_form.html',
+        {'form': form, 'title': 'Log Nutrition'}
+    )
 
 @login_required
 def nutrition_update(request, pk):
@@ -220,7 +258,12 @@ def nutrition_update(request, pk):
             return redirect('nutrition_list')
     else:
         form = NutritionEntryForm(instance=nutrition)
-    return render(request, 'health/nutrition_form.html', {'form': form, 'title': 'Update Nutrition'})
+    return render(
+        request,
+        'health/nutrition_form.html',
+        {'form': form, 'title': 'Update Nutrition'}
+    )
+
 
 @login_required
 def nutrition_delete(request, pk):
@@ -229,7 +272,11 @@ def nutrition_delete(request, pk):
         nutrition.delete()
         messages.success(request, 'Nutrition entry deleted successfully!')
         return redirect('nutrition_list')
-    return render(request, 'health/nutrition_confirm_delete.html', {'nutrition': nutrition})
+    return render(
+        request,
+        'health/nutrition_confirm_delete.html',
+        {'nutrition': nutrition}
+    )
 
 class SPATemplateView(TemplateView):
     """
