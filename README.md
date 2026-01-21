@@ -1,96 +1,80 @@
-# Health Tracker Application  
+# Health Tracker Application
 
-## Project Description  
-The Health Tracking Application is a full-stack web application, designed to help users monitor and manage their health and wellness. This application utilizes a REST API, providing a user-friendly interface for tracking various health metrics, such as physical activity and nutrition. It is containerized using Docker for easy deployment and scalability. 
+## Project Description
+The Health Tracking Application is a **full-stack web application** built with Django that provides a user interface for logging workouts, meals, and setting fitness goals. It includes both traditional Django template rendering and a REST API for data access.
 
-The application is configured for deployment on [Render](https://render.com/) using a `render.yaml` file, allowing seamless hosting of the web service in the cloud.  
+**Architecture:**
+- **Frontend**: Django templates with Bootstrap 5
+- **Backend**: Django with REST API
+- **Database**: PostgreSQL for production (SQLite for development)
+- **Deployment**: Single Render service
+
+The application is configured for deployment on [Render](https://render.com/) using a `render.yaml` file, allowing seamless hosting of the web service in the cloud.
 🔗 **Live Demo**: [https://healthtracker-is4l.onrender.com](https://healthtracker-is4l.onrender.com)
 
-## Features  
-- **User Authentication**: Secure user registration and login functionality.  
-- **Dashboard**: A personalized dashboard displaying health metrics and insights.  
-- **Activity Tracking**: Log workouts, steps, and other physical activities.  
-- **Nutrition Logging**: Input daily food intake and nutritional information.  
-- **Smart Analytics**: AI-powered insights with machine learning recommendations.
-- **Goal Setting**: Define fitness objectives and track progress with personalized targets.
-- **Advanced Visualizations**: Interactive charts showing trends and progress over time.
-- **Personalized Recommendations**: ML-driven suggestions based on your goals and patterns.    
+## Architecture
+- **Frontend**: Django templates with server-side rendering
+- **Backend**: Django REST API serving JSON data
+- **Database**: PostgreSQL for data persistence
+- **Deployment**: Single service serving both templates and API endpoints
 
-## Technology Stack  
-- **Frontend**: Django Templates with Bootstrap 5, HTML, CSS, and JavaScript.
-- **Backend**: Python with Django and Django REST Framework for server-side logic and API development.  
-- **Database**: PostgreSQL for data storage (SQLite for development).
-- **Data Analysis**: Pandas, NumPy, Matplotlib, Scikit-learn for analytics and ML.
-- **Containerization**: Docker for application deployment and management. 
-- **API Integration**: RESTful API endpoints for seamless interaction between frontend and backend.   
+**How it works:**
+- Django views render HTML templates
+- REST API endpoints provide JSON data
+- Single deployment handles both interface and API
+
+## Features
+- **User Authentication**: Secure user registration and login
+- **Dashboard**: Real-time health metrics and progress tracking via API
+- **Activity Tracking**: Log workouts and calories burned
+- **Nutrition Logging**: Track meals with detailed nutritional information
+- **Goal Setting**: Define fitness objectives and monitor progress
+- **REST API**: Full CRUD operations via JSON API endpoints
+- **Frontend**: Django templates with Bootstrap 5
+- **Real-time Updates**: API-driven data updates without page refreshes
+
+## Technology Stack
+- **Backend**: Python with Django 4.2.17 + Django REST Framework
+- **Frontend**: Django templates with Bootstrap 5
+- **Database**: PostgreSQL for production (SQLite for development)
+- **API**: Django REST Framework with session authentication
+- **Containerization**: Docker for application deployment
 - **Deployment**: Render using `render.yaml`
-
-## Local Development Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd HealthTracker
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run migrations**:
-   ```bash
-   cd app
-   python manage.py migrate
-   ```
-
-4. **Start the development server**:
-   ```bash
-   python manage.py runserver
-   ```
-
-5. **Access the application**:
-   Open your browser and go to `http://127.0.0.1:8000`
+- **Development Tools**: Flake8 for code linting
 
 ## Usage
 
-1. **Register**: Create a new account or login with existing credentials.
-2. **Set Goals**: Define your health objectives (weight loss, muscle gain, fitness improvement, etc.).
-3. **Dashboard**: View your daily health metrics and AI-powered insights.
-4. **Log Activities**: Record your workouts, runs, or other physical activities.
-5. **Track Nutrition**: Log your meals and monitor nutritional intake.
-6. **View Analytics**: Access advanced analytics with ML-driven recommendations and trend analysis.
-
-## AI & Machine Learning Features
-
-### Smart Recommendations
-- **Goal-Based Insights**: Personalized recommendations based on your fitness objectives
-- **Pattern Recognition**: ML algorithms identify trends in your activity and nutrition data
-- **Progress Tracking**: Automated analysis of your progress toward goals
-
-### Advanced Analytics
-- **Trend Analysis**: Linear regression models to predict future performance
-- **Visual Charts**: Interactive matplotlib-generated charts showing progress over time
-- **Weekly Statistics**: Comprehensive weekly breakdowns of health metrics
-- **Goal Progress Visualization**: Charts showing progress ratios against targets
-
-### Data-Driven Insights
-- **Calorie Balance Analysis**: Compare intake vs expenditure
-- **Activity Pattern Recognition**: Identify optimal times and frequencies for exercise
-- **Nutrition Optimization**: Recommendations for macronutrient balance
-- **Performance Prediction**: Forecast future health metrics based on current trends
+1. **Register**: Create a new account or login with existing credentials
+2. **Set Goals**: Define your health objectives in the Goals section
+3. **Dashboard**: View your daily health metrics and recent activities
+4. **Log Activities**: Record your workouts or other physical activities
+5. **Track Nutrition**: Log your meals and monitor nutritional intake
 
 ## API Endpoints
 
 The application provides REST API endpoints for:
-- User management
-- Activity logging
-- Nutrition tracking
+- User management (authentication)
+- Activity logging and management
+- Nutrition tracking and management
+- Goal setting and management
 
 ## Deployment
 
-The application is configured for deployment on Render with Docker. The `render.yaml` file contains the deployment configuration.
-  
-## Goals  
-- Empower users to take control of their health by providing an intuitive platform for tracking and managing their wellness.  
-- Promote healthier habits through progress tracking.
+The application is configured for deployment on Render with Docker. The `render.yaml` file contains the deployment configuration for the web service with PostgreSQL database.
+
+## Data Models
+
+### UserGoal
+- Goal types: Weight Loss, Weight Gain, Muscle Gain, Maintain Weight, Increase Fitness, Improve Endurance
+- Targets: Weight, calories to burn/consume, protein intake, activity days per week
+
+### Activity
+- Activity type, duration, distance, calories burned, date, notes
+
+### NutritionEntry
+- Food name, calories, macronutrients (protein, carbs, fat), quantity, meal type, date
+
+## Goals
+- Provide users with an intuitive platform for tracking and managing their health metrics
+- Enable goal setting and progress monitoring
+- Support healthy habit formation through consistent logging and tracking
