@@ -138,7 +138,9 @@ def goal_settings(request):
             goal = form.save(commit=False)
             goal.user = request.user
             goal.save()
-            messages.success(request, 'Your goals have been updated successfully!')
+            messages.success(
+                request, 'Your goals have been updated successfully!'
+            )
             return redirect('dashboard')
     else:
         if goal:
@@ -227,6 +229,7 @@ def nutrition_list(request):
         {'nutrition_entries': nutrition_entries}
     )
 
+
 @login_required
 def nutrition_create(request):
     if request.method == 'POST':
@@ -244,6 +247,7 @@ def nutrition_create(request):
         'health/nutrition_form.html',
         {'form': form, 'title': 'Log Nutrition'}
     )
+
 
 @login_required
 def nutrition_update(request, pk):
