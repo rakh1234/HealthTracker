@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [
     'healthtracker-is4l.onrender.com',
     'localhost',
     '127.0.0.1',
+    '216.24.60.0/24',
+    '*',
 ]
 
 
@@ -45,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'app.health',
+    'health',
 ]
 
 MIDDLEWARE = [
