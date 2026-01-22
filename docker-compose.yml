@@ -17,6 +17,7 @@ services:
       - DB_USER=devuser
       - DB_PASS=Sha@2030
       - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=settings
     depends_on:
       - db
 
