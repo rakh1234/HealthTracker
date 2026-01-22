@@ -13,7 +13,7 @@ services:
       - key: DEBUG
         value: False
       - key: DJANGO_SETTINGS_MODULE
-        value: settings
+        value: app.settings
       - key: DB_HOST
         value: dpg-cnqtqfgl5elc73d2aqe0-a
       - key: DB_NAME
