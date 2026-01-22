@@ -56,7 +56,4 @@ urlpatterns = [
         api_views.dashboard_stats,
         name='api_dashboard_stats'
     ),
-
-    # SPA catch-all route (must be last)
-    path('', views.SPATemplateView.as_view(), name='spa'),
 ]

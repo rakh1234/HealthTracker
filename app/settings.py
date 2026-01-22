@@ -30,8 +30,6 @@ ALLOWED_HOSTS = [
     'healthtracker-is4l.onrender.com',
     'localhost',
     '127.0.0.1',
-    '216.24.60.0/24',
-    '*',
 ]
 
 
@@ -154,9 +152,9 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Additional directories for static files (for serving frontend SPA)
-STATICFILES_DIRS = [
-    BASE_DIR / 'frontend' / 'dist',  # For built Angular/React frontend
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'frontend' / 'dist',  # For built Angular/React frontend
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

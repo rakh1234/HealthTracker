@@ -6,8 +6,6 @@ from django.contrib import messages
 from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
-from django.views.generic import TemplateView
-from django.template import TemplateDoesNotExist
 from .models import Activity, NutritionEntry, UserGoal
 from .forms import ActivityForm, NutritionEntryForm, UserGoalForm
 
@@ -277,19 +275,3 @@ def nutrition_delete(request, pk):
         'health/nutrition_confirm_delete.html',
         {'nutrition': nutrition}
     )
-
-class SPATemplateView(TemplateView):
-    """
-    View to serve the Single Page Application.
-    This will serve the index.html for any non-API routes when the frontend is built.
-    """
-    template_name = 'index.html'  # This will be the built Angular/React index.html
-
-    def get(self, request, *args, **kwargs):
-        # In production, this will serve the built SPA
-        # For development, you might want to redirect to the dev server
-        try:
-            return super().get(request, *args, **kwargs)
-        except TemplateDoesNotExist:
-            # Fallback to traditional dashboard if SPA is not built
-            return redirect('dashboard')
