@@ -5,6 +5,7 @@ services:
     buildCommand: |
       apt-get update && apt-get install -y postgresql-client libpq-dev
       pip install -r requirements.txt
+      cd app && python manage.py migrate --noinput
       cd app && python manage.py collectstatic --noinput
     startCommand: gunicorn --bind 0.0.0.0:$PORT app.wsgi:application
     envVars:
