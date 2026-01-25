@@ -4,7 +4,7 @@ services:
     env: python
     buildCommand: |
       pip install -r requirements.txt
-      cd app && python manage.py collectstatic --noinput
+      export PYTHONPATH=/opt/render/project/src && python app/manage.py collectstatic --noinput
     startCommand: chmod +x start.sh && ./start.sh
     envVars:
       - key: SECRET_KEY
