@@ -107,6 +107,10 @@ db_name = os.environ.get('DB_NAME')
 db_user = os.environ.get('DB_USER')
 db_pass = os.environ.get('DB_PASS')
 
+# Debug: Log database configuration (don't log password in production)
+if not DEBUG:
+    print(f"Database config - Host: {db_host}, Name: {db_name}, User: {db_user}, Pass: {'*' * len(db_pass) if db_pass else 'None'}")
+
 if db_host and db_name and db_user and db_pass:
     DATABASES = {
         'default': {
