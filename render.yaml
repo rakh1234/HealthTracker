@@ -7,7 +7,7 @@ services:
       pip install -r requirements.txt
       cd app && python manage.py migrate --noinput
       cd app && python manage.py collectstatic --noinput
-    startCommand: gunicorn --bind 0.0.0.0:$PORT app.wsgi:application
+    startCommand: chmod +x start.sh && ./start.sh
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -17,11 +17,5 @@ services:
         value: app.settings
       - key: PYTHONPATH
         value: /opt/render/project/src
-      - key: DB_HOST
-        value: dpg-cnqtqfgl5elc73d2aqe0-a
-      - key: DB_NAME
-        value: healthtracker_db_qqxm
-      - key: DB_USER
-        value: admin
-      - key: DB_PASS
-        value: your_database_password
+      # Database credentials should be set in Render dashboard Environment Variables
+      # for security. Add: DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT
