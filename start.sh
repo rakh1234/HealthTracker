@@ -3,6 +3,9 @@ set -e
 
 echo "Starting application..."
 
+# Set PYTHONPATH to the project root so Python can find the 'app' module
+export PYTHONPATH=/opt/render/project/src
+
 # Run migrations from the app directory
 cd app
 echo "Running database migrations..."
