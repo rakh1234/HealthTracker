@@ -9,6 +9,10 @@ echo "Running database migrations..."
 python manage.py migrate --noinput
 echo "Migrations completed successfully!"
 
+# Collect static files (optional, won't fail if it doesn't work)
+echo "Collecting static files..."
+python manage.py collectstatic --noinput || echo "Static files collection skipped"
+
 # Start gunicorn from the root directory (so it can find app.wsgi)
 cd ..
 echo "Starting gunicorn..."
