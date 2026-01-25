@@ -6,9 +6,8 @@ echo "Starting application..."
 # Run migrations from the app directory
 cd app
 echo "Running database migrations..."
-python manage.py migrate --noinput || {
-    echo "Migration failed, but continuing..."
-}
+python manage.py migrate --noinput
+echo "Migrations completed successfully!"
 
 # Start gunicorn from the root directory (so it can find app.wsgi)
 cd ..
