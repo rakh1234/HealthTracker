@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 
 class UserGoal(models.Model):
@@ -12,7 +12,7 @@ class UserGoal(models.Model):
         ('improve_endurance', 'Improve Endurance'),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     goal_type = models.CharField(
         max_length=50,
         choices=GOAL_TYPES,
@@ -46,12 +46,14 @@ class UserGoal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"{self.user.username}'s {self.get_goal_type_display()} goal"
+    # def __str__(self):
+    #     return f"{self.user.username}'s {self.get_goal_type_display()} goal"
 
+    def __str__(self):
+        return f"{self.get_goal_type_display()} goal"
 
 class Activity(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     activity_type = models.CharField(max_length=100)
     duration = models.PositiveIntegerField(
         help_text="Duration in minutes"
@@ -71,11 +73,11 @@ class Activity(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.activity_type} on {self.date}"
+        return f"{self.activity_type} on {self.date}"
 
 
 class NutritionEntry(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     food_name = models.CharField(max_length=200)
     calories = models.PositiveIntegerField()
     protein = models.DecimalField(
@@ -116,4 +118,4 @@ class NutritionEntry(models.Model):
     )
 
     def __str__(self):
-        return f"{self.user.username} - {self.food_name} on {self.date}"
+        return f"{self.food_name} on {self.date}"

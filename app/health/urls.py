@@ -11,9 +11,9 @@ router.register(r'goals', api_views.UserGoalViewSet)
 urlpatterns = [
     # Traditional Django views (for backward compatibility)
     path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout'),
+    # path('register/', views.register, name='register'),
+    # path('login/', views.user_login, name='login'),
+    # path('logout/', views.user_logout, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('goals/', views.goal_settings, name='goal_settings'),
     path('activities/', views.activity_list, name='activity_list'),
