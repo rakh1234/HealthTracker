@@ -101,32 +101,23 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Use PostgreSQL if all required environment variables are set, otherwise use SQLite
-db_host = os.environ.get('DB_HOST')
-db_name = os.environ.get('DB_NAME')
-db_user = os.environ.get('DB_USER')
-db_pass = os.environ.get('DB_PASS')
 
-# Debug: Log database configuration (don't log password in production)
-if not DEBUG:
-    print(f"Database config - Host: {db_host}, Name: {db_name}, User: {db_user}, Pass: {'*' * len(db_pass) if db_pass else 'None'}")
-
-if db_host and db_name and db_user and db_pass:
+if os.environ.get("NO_DB", "") == "1":
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': db_host,
-            'PORT': os.environ.get('DB_PORT', '5432'),
-            'NAME': db_name,
-            'USER': db_user,
-            'PASSWORD': db_pass,
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
         }
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["DB_NAME"],
+            "USER": os.environ["DB_USER"],
+            "PASSWORD": os.environ["DB_PASSWORD"],
+            "HOST": os.environ["DB_HOST"],
+            "PORT": os.environ.get("DB_PORT", 5432),
         }
     }
 
